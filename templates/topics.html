@@ -26,10 +26,10 @@
     {%for topic in board.topics.all%}
     <tr>
         <td>{{ topic.subject}}</td>
-        <td>{{ topic.created_by.username}}</td>
+        <td>{{ topic.created_by.email}}</td>
         <td>0</td>
         <td>0</td>
-        <td>{{ topic.created_dt}}</td>
+        <td>{{ topic.created_at}}</td>
 
     </tr>
     {%endfor%}

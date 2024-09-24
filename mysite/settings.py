@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bordes', # Add my new app to the list of installed apps
-    'widget_tweaks'
+    'widget_tweaks',
+    'auth'
 ]
 
 MIDDLEWARE = [
