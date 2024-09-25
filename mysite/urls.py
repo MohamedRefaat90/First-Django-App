@@ -23,5 +23,7 @@ from bordes import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Add this line to include the urls from the bordes app
-    path('', include('bordes.urls')) 
+    path('', include('bordes.urls')),
+    # Add this line to include the urls from the user app
+    path('', include('user.urls')) 
 ]
