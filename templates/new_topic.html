@@ -8,7 +8,7 @@
   <li class="breadcrumb-item active">New topic</li>
 {% endblock %}
 
-{% block content %}
+{% block body %}
   <form method="post" novalidate>
     {% csrf_token %}
     {% include 'includes/form.html'%}

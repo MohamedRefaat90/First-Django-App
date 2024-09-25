@@ -6,7 +6,7 @@
     <h1>Boards</h1>
 {%endblock%}
 
-{% block content %}
+{% block body %}
 <table class="table" border="2">
     <thead class="thead-dark">
     <tr>
@@ -24,7 +24,7 @@
         </td>
         <td>0</td>
         <td>0</td>
-        <td></td>
+        <td>{{board.created_at}}</td>
     </tr>
     {%endfor%}
 
