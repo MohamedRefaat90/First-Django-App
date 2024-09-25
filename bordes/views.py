@@ -5,7 +5,6 @@ from .models import Board , Post # import the model you want to display
 from .forms import NewTopicForm
 
 
-
 # Create your views here.
 
 def home(request):
