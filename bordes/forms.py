@@ -1,5 +1,5 @@
 from django import forms
-from .models import Topic
+from .models import Topic, Post
 
 class NewTopicForm(forms.ModelForm):
 
@@ -19,3 +19,10 @@ class NewTopicForm(forms.ModelForm):
         # This defines which fields from the Topic model 
         # should be included in the form
         fields = ['subject', 'message']
+
+
+class replyForm(forms.ModelForm):
+    
+    class Meta:
+        model = Post
+        fields = ['message',]

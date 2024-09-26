@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
 from django.contrib.auth.models import User
-from .models import Board , Post # import the model you want to display
-from .forms import NewTopicForm
+from django.contrib.auth.decorators import login_required
+from .models import Board , Post, Topic # import the model you want to display
+from .forms import NewTopicForm, replyForm
+
 
 
 # Create your views here.
@@ -22,9 +24,11 @@ def board_topics(request, board_id):
     board = get_object_or_404(Board, pk=board_id)
     return render(request, 'topics.html', {'board': board})
 
+@login_required
 def new_topic(requset,board_id):
+
     board = get_object_or_404(Board, pk=board_id)
-    user = User.objects.first()  # get the first user for now
+    # user = User.objects.first()  # get the first user for now
 
     if requset.method == 'POST':
         # take instace from form
@@ -34,7 +38,7 @@ def new_topic(requset,board_id):
             # This creates a Topic instance but doesn’t save it to the database yet
             topic = form.save(commit=False)
             topic.board = board
-            topic.created_by = user
+            topic.created_by = requset.user
 
             # Saves the Topic instance to the database.
             topic.save()
@@ -43,7 +47,7 @@ def new_topic(requset,board_id):
             post = Post.objects.create(
                 # Retrieves the validated message from the form data and assigns it to the Post
                 message = form.cleaned_data.get('message'),
-                created_by = user,
+                created_by = requset.user,
                 Topic = topic
 
             )
@@ -57,3 +61,29 @@ def new_topic(requset,board_id):
         form = NewTopicForm()
 
     return render(requset,'new_topic.html',{'board':board,'form':form})    
+
+def topic_posts(request, board_id, topic_id):
+    # Retrieve the Topic object with the specified board_id and topic_id.
+    # If no such object exists, raise an Http404 exception.
+    topic = get_object_or_404(Topic, board__pk=board_id, pk=topic_id)
+    return render(request, 'topic_posts.html', {'topic': topic})
+
+def reply_topic(request, board_id, topic_id):
+    topic = get_object_or_404(Topic,borad__pk = board_id, pk=topic_id)
+
+    if request.method == "POST":
+        form = replyForm(request.post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.topic = topic
+            post.created_by = request.user
+            post.save()
+            return redirect('topic_posts', board_id=board_id, topic_id=topic_id)
+    else:
+        form = replyForm()
+        return render(request, 'reply_topic.html', {'topic': topic, 'form': form})
+
+
+def edit_post(request, board_id, topic_id, post_id):
+    
+    return render(request, 'edit_post.html')

@@ -11,7 +11,15 @@ class Board(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+    # return the number of post in the board
+    def get_post_count(self):
+        # filter the posts on the relation between the board and the topic
+        return Post.objects.filter(Topic__board=self).count()
 
+    # return the last post in the board
+    def get_last_post(self):
+        return Post.objects.filter(Topic__board = self).last()
 
 class Topic(models.Model):
     subject = models.CharField(max_length=50)
@@ -21,6 +29,8 @@ class Topic(models.Model):
 
     def __str__(self) -> str:
         return self.subject
+    
+    
 
 class Post(models.Model):
     message = models.TextField(max_length=2000)

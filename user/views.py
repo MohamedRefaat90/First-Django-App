@@ -1,5 +1,4 @@
 from django.shortcuts import render , redirect
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import logout as logoutUser
 from .form import SignupForm
 # Create your views here.
