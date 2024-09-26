@@ -66,6 +66,8 @@ def topic_posts(request, board_id, topic_id):
     # Retrieve the Topic object with the specified board_id and topic_id.
     # If no such object exists, raise an Http404 exception.
     topic = get_object_or_404(Topic, board__pk=board_id, pk=topic_id)
+    topic.views += 1
+    topic.save()
     return render(request, 'topic_posts.html', {'topic': topic})
 
 def reply_topic(request, board_id, topic_id):

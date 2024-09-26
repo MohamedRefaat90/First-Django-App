@@ -27,8 +27,8 @@
     <tr>
         <td><a href ="{% url 'topic_posts' board.pk topic.pk %}">{{ topic.subject}}</a></td>
         <td>{{ topic.created_by.email}}</td>
-        <td>0</td>
-        <td>0</td>
+        <td>{{ topic.get_post_count }}</td>
+        <td>{{topic.views}}</td>
         <td>{{ topic.created_at}}</td>
 
     </tr>

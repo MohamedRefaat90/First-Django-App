@@ -26,11 +26,13 @@ class Topic(models.Model):
     board = models.ForeignKey(Board, related_name='topics', on_delete=models.CASCADE)
     created_by = models.ForeignKey(User, related_name='topics', on_delete=models.CASCADE)
     created_at= models.DateTimeField(auto_now_add=True)
-
+    views = models.PositiveIntegerField(default=0)
+    
     def __str__(self) -> str:
         return self.subject
     
-    
+    def get_post_count(self):
+        return self.posts.count()
 
 class Post(models.Model):
     message = models.TextField(max_length=2000)
